@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  # https://pub.dev/packages/build_runner
+  build_runner: ^2.4.15
   # https://pub.dev/packages/json_annotation
   json_annotation: ^4.9.0
   # https://pub.dev/packages/shared_preferences

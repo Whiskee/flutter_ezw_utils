@@ -19,6 +19,7 @@ export 'storage/storage.dart';
 //  ThirdPart
 export 'package:json_annotation/json_annotation.dart';
 export 'package:shared_preferences/shared_preferences.dart';
+export 'package:build_runner/build_runner.dart';
 
 part 'src/flutter_ezw_utils.dart';
 
