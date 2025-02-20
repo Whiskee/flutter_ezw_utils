@@ -20,6 +20,7 @@ export 'storage/storage.dart';
 export 'package:json_annotation/json_annotation.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:build_runner/build_runner.dart';
+export 'package:flutter_gen_runner/flutter_gen_runner.dart';
 
 part 'src/flutter_ezw_utils.dart';
 
