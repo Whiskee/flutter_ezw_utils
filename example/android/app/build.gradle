@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.fzfstudio.ezw_utils_example"
+    namespace = "com.fzfstudio.flutter_ezw_utils_example"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

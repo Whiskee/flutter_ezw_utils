@@ -1,6 +1,6 @@
 import 'package:flutter_ezw_utils/flutter_ezw_utils.dart';
-import 'package:flutter_ezw_utils/src/flutter_ezw_utils_method_channel.dart';
-import 'package:flutter_ezw_utils/src/flutter_ezw_utils_platform_interface.dart';
+import 'package:flutter_ezw_utils/flutter_ezw_utils_method_channel.dart';
+import 'package:flutter_ezw_utils/flutter_ezw_utils_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
