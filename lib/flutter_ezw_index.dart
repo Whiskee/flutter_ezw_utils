@@ -2,6 +2,9 @@ library flutter_ezw;
 
 export 'package:flutter_ezw_utils/flutter_ezw_utils.dart';
 
+/// ThirdPart
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+
 /// Extension
 export 'extension/double_ext.dart';
 export 'extension/duration_ext.dart';
