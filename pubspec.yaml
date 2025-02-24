@@ -21,6 +21,8 @@ dependencies:
   shared_preferences: ^2.5.2
   # https://pub.dev/packages/flutter_screenutil
   flutter_screenutil: ^5.9.3
+  # https://pub.dev/packages/get 
+  get: ^4.7.2
 
 dev_dependencies:
   flutter_test:
