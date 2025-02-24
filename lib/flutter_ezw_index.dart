@@ -4,6 +4,7 @@ export 'package:flutter_ezw_utils/flutter_ezw_utils.dart';
 
 /// ThirdPart
 export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:get/get.dart';
 
 /// Extension
 export 'extension/double_ext.dart';
