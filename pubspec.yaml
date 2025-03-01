@@ -11,10 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
-  # https://pub.dev/packages/build_runner
-  build_runner: ^2.4.15
-  # Assets Manager: https://pub.dev/packages/flutter_gen
-  flutter_gen_runner: ^5.9.0
   # https://pub.dev/packages/json_annotation
   json_annotation: ^4.9.0
   # https://pub.dev/packages/shared_preferences
@@ -28,6 +24,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+   # https://pub.dev/packages/build_runner
+  build_runner: ^2.4.15
+  # Assets Manager: https://pub.dev/packages/flutter_gen
+  flutter_gen_runner: ^5.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
