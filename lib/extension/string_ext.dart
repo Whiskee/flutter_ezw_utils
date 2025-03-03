@@ -31,3 +31,7 @@ extension StringExt on String {
 
   Uint8List encodeBase64() => base64Decode(this);
 }
+
+extension StringNullExt on String? {
+  bool get isNullOrEmpty => this == null || this!.isEmpty;
+}
