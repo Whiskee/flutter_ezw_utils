@@ -21,6 +21,8 @@ dependencies:
   get: ^4.7.2
   # https://pub.dev/packages/uuid
   uuid: ^4.5.1
+  # https://pub.dev/packages/pointycastle
+  pointycastle: ^4.0.0
 
 dev_dependencies:
   flutter_test:
