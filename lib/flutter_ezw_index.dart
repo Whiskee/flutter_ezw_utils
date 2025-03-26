@@ -9,6 +9,7 @@ export 'package:get/get_connect/http/src/request/request.dart';
 export 'package:json_annotation/json_annotation.dart';
 export 'package:uuid/uuid.dart';
 export 'package:synchronized/synchronized.dart';
+export 'package:flutter_svg/flutter_svg.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
