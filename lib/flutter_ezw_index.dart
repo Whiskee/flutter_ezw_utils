@@ -18,6 +18,7 @@ export 'encrypt/encrypt.dart';
 export 'extension/double_ext.dart';
 export 'extension/duration_ext.dart';
 export 'extension/int_ext.dart';
+export 'extension/int16list_ext.dart';
 export 'extension/state_ext.dart';
 export 'extension/string_ext.dart';
 export 'extension/uint8list_ext.dart';
