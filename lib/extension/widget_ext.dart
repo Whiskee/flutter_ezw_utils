@@ -11,7 +11,7 @@ extension WidgetExt on Widget {
     VoidCallback onTap, {
     int debounceMs = 0,
     int throttleMs = 200,
-    HitTestBehavior behavior = HitTestBehavior.deferToChild,
+    HitTestBehavior behavior = HitTestBehavior.translucent,
   }) =>
       GestureDetector(
         onTap: throttleMs > 0
