@@ -31,3 +31,6 @@ export 'json/unit8list_converter.dart';
 
 /// Storage
 export 'storage/storage.dart';
+
+/// Utils
+export 'utils/file_util.dart';
