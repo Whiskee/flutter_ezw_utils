@@ -11,6 +11,7 @@ export 'package:json_annotation/json_annotation.dart';
 export 'package:lottie/lottie.dart';
 export 'package:synchronized/synchronized.dart';
 export 'package:uuid/uuid.dart';
+export 'package:file_picker/file_picker.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
