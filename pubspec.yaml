@@ -31,9 +31,10 @@ dependencies:
   flutter_svg: ^2.1.0
   # 矢量动画库 https://pub.dev/packages/lottie
   lottie: ^3.3.1
-  # 文件选择器
-  # https://pub.dev/packages/file_picker
+  # 文件选择器 https://pub.dev/packages/file_picker
   file_picker: ^8.0.2
+  # 应用设置  https://pub.dev/packages/app_settings
+  app_settings: ^6.1.1
 
 dev_dependencies:
   flutter_test:
