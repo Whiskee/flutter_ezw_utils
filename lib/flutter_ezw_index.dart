@@ -12,6 +12,7 @@ export 'package:lottie/lottie.dart';
 export 'package:synchronized/synchronized.dart';
 export 'package:uuid/uuid.dart';
 export 'package:file_picker/file_picker.dart';
+export 'package:app_settings/app_settings.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
