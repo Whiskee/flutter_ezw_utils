@@ -14,6 +14,7 @@ export 'package:uuid/uuid.dart';
 export 'package:file_picker/file_picker.dart';
 export 'package:app_settings/app_settings.dart';
 export 'package:permission_handler/permission_handler.dart';
+export 'package:archive/archive.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
