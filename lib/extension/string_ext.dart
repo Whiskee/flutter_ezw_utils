@@ -3,6 +3,10 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 extension StringExt on String {
+  /// 字符串转Uint8List
+  Uint8List toUint8List() => utf8.encode(this);
+
+  /// 字符串转Map
   Map<String, dynamic> toMap() {
     try {
       return jsonDecode(this);
