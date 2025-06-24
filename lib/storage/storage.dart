@@ -9,16 +9,15 @@ class Storage {
 
   Storage._init();
 
-  /// 初始化SharpPreferences
-  Future<void> _initPrefs() async {
+  /// (使用前必须执行)初始化SharpPreferences
+  Future<void> initPrefs() async {
     if (_prefs != null) {
       return;
     }
     _prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> setData<T>(String key, T value) async {
-    await _initPrefs();
+  void setData<T>(String key, T value) {
     if (value is String) {
       _prefs?.setString(key, value);
     } else if (value is int) {
@@ -35,8 +34,7 @@ class Storage {
   }
 
   /// 获取存储数据
-  Future<T?> getData<T>(String key) async {
-    await _initPrefs();
+  T? getData<T>(String key) {
     if (T == String) {
       return _prefs?.getString(key) as T?;
     } else if (T == int) {
@@ -48,17 +46,17 @@ class Storage {
     } else if (T == List<String>) {
       return _prefs?.getStringList(key) as T?;
     } else if (T == Map) {
-      return await _getMap(key) as T?;
+      return _getMap(key) as T?;
     }
     return null;
   }
 
-  void _setMap(String key, Map map) async {
+  void _setMap(String key, Map map) {
     final jsonString = jsonEncode(map);
-    await _prefs?.setString(key, jsonString);
+    _prefs?.setString(key, jsonString);
   }
 
-  Future<Map?> _getMap(String key) async {
+  Map? _getMap(String key) {
     final jsonString = _prefs?.getString(key) ?? "";
     return jsonString.isEmpty ? null : jsonDecode(jsonString) as Map?;
   }
