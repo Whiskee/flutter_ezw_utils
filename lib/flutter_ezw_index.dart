@@ -15,6 +15,9 @@ export 'package:file_picker/file_picker.dart';
 export 'package:app_settings/app_settings.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:archive/archive.dart';
+export 'package:scrollview_observer/scrollview_observer.dart';
+export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+export 'package:fixnum/fixnum.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
