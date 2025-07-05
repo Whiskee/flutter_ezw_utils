@@ -39,4 +39,5 @@ export 'json/unit8list_converter.dart';
 export 'storage/storage.dart';
 
 /// Utils
+export 'utils/bit_util.dart';
 export 'utils/file_util.dart';

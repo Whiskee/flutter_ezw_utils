@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 /// 比特位操作工具类
 /// 提供完整的字节和比特位操作功能
-class BitUtils {
+class BitUtil {
   /// 将8个布尔值组装成一个字节
   ///
   /// [bits] 8个布尔值的列表，从左到右对应字节的高位到低位
