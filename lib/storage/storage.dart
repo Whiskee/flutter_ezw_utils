@@ -62,6 +62,65 @@ class Storage {
     return null;
   }
 
+  /// 保存List的缓存数据
+  /// @params key 缓存的key
+  /// @params list 要缓存的数据list
+  /// @params toJson 对应类型T的转换json的方法
+  ///       （非string,bool,num类型时最好提供，否则数据可能保存不正确）
+  void saveListData<T>(String key, List<T> list,
+      [dynamic Function(T item)? toJson]) {
+    try {
+      final jsonList = list.map((item) {
+        if (item is String || item is num || item is bool) {
+          return item; // 基础类型直接存储
+        } else if (item is Map || item is List) {
+          return item; // Map和List默认支持JSON
+        } else if (toJson != null) {
+          // 对于自定义对象，使用传入的 toJson 方法
+          return toJson(item);
+        } else {
+          // 如果没有提供 toJson 方法，尝试直接转换
+          return item.toString();
+        }
+      }).toList();
+
+      final jsonString = jsonEncode(jsonList);
+      _mmkvInstance?.encodeString(key, jsonString);
+      log.d(_tag, "saveListData success: key=$key, count=${list.length}");
+    } catch (e) {
+      log.e(_tag, "saveListData error: key=$key, error=$e");
+    }
+  }
+
+  /// 获取保存的list数据
+  /// @params key 缓存的key
+  /// @params list 要缓存的数据list
+  /// @params fromJson 对应类型T从json串转换成对应对象的方法
+  ///       （非string,bool,num类型时最好提供，否则反序列化可能不正确）
+  List<T> getListData<T>(String key, [T Function(dynamic json)? fromJson]) {
+    try {
+      final jsonString = _mmkvInstance?.decodeString(key);
+      if (jsonString == null || jsonString.isEmpty) {
+        return [];
+      }
+      final jsonList = jsonDecode(jsonString) as List<dynamic>;
+
+      if (fromJson != null) {
+        // 使用传入的 fromJson 方法
+        final result = jsonList.map((json) => fromJson(json)).toList();
+        return result;
+      } else {
+        // 如果没有提供 fromJson 方法，尝试直接转换
+        final result = jsonList.cast<T>();
+        log.d(_tag, "getListData try cast direct: key=$key ");
+        return result;
+      }
+    } catch (e) {
+      log.e(_tag, "getListData error: key=$key, error=$e");
+      return [];
+    }
+  }
+
   /// 移除缓存信息
   void removeData(String key) {
     _mmkvInstance?.removeValue(key);
