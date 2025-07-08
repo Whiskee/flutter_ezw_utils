@@ -13,8 +13,8 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   # Json序列化 https://pub.dev/packages/json_annotation
   json_annotation: ^4.9.0
-  # 缓存工具 https://pub.dev/packages/shared_preferences
-  shared_preferences: ^2.5.3
+  # 缓存工具 https://pub.dev/packages/mmkv
+  mmkv: ^2.2.0
   # https://pub.dev/packages/flutter_screenutil
   flutter_screenutil: ^5.9.3
   # https://pub.dev/packages/get
@@ -43,6 +43,11 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   # 修复浮点数计算问题 https://pub.dev/packages/fixnum
   fixnum: ^1.1.1
+  # log TODO:这里通过接口来避免直接引入
+  flutter_ezw_logger:
+    git:
+      url: http://192.168.2.101/even/applications/app/ezw/flutter_ezw_logger.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
