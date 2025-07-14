@@ -335,7 +335,7 @@ extension Uint8listExt on Uint8List {
   /// 如果转换失败，返回 null 而不是抛出异常
   String? toJsonString() {
     try {
-      final jsonString = utf8.decode(this);
+      final jsonString = decodeToString();
       jsonDecode(jsonString); // 验证 JSON 格式
       return jsonString;
     } catch (e) {
@@ -348,10 +348,21 @@ extension Uint8listExt on Uint8List {
   /// 如果转换失败，返回 null 而不是抛出异常
   Map<String, dynamic>? toJsonMapSafe() {
     try {
-      final jsonString = utf8.decode(this);
+      final jsonString = decodeToString();
       return jsonDecode(jsonString) as Map<String, dynamic>;
     } catch (e) {
       return null;
+    }
+  }
+
+  /// 将 Uint8List 解码为 UTF-8 字符串
+  ///
+  /// 如果解码失败，返回空字符串
+  String decodeToString() {
+    try {
+      return utf8.decode(this);
+    } catch (e) {
+      return "";
     }
   }
 }
