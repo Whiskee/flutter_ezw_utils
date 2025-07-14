@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_ezw_utils/models/uint_type.dart';
@@ -328,4 +329,7 @@ extension Uint8listExt on Uint8List {
         return byteData.getUint8(byteOffset);
     }
   }
+
+  /// 转json字符串
+  String toJsonString() => jsonEncode(this);
 }
