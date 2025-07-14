@@ -330,6 +330,28 @@ extension Uint8listExt on Uint8List {
     }
   }
 
-  /// 转json字符串
-  String toJsonString() => jsonEncode(this);
+  /// 安全地将 Uint8List 转换为 JSON 字符串
+  ///
+  /// 如果转换失败，返回 null 而不是抛出异常
+  String? toJsonString() {
+    try {
+      final jsonString = utf8.decode(this);
+      jsonDecode(jsonString); // 验证 JSON 格式
+      return jsonString;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// 将 Uint8List 转换为 Map<String, dynamic>
+  ///
+  /// 如果转换失败，返回 null 而不是抛出异常
+  Map<String, dynamic>? toJsonMapSafe() {
+    try {
+      final jsonString = utf8.decode(this);
+      return jsonDecode(jsonString) as Map<String, dynamic>;
+    } catch (e) {
+      return null;
+    }
+  }
 }
