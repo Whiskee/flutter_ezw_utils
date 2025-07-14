@@ -291,14 +291,17 @@ extension Uint8listExt on Uint8List {
   }
 
   /// 使用查表法的优化版本（推荐）
-  int toCrc32WithTable({
+  /// 计算 CRC-32C 校验值（与 C 语言实现完全一致）
+  /// [data] - 输入数据字节数组
+  /// [initialCrc] - 初始 CRC 值（默认为 0xFFFFFFFF）
+  /// 返回计算后的 CRC 值
+  int toCrc32({
     int initialCrc = 0xFFFFFFFF,
   }) {
     int crc = initialCrc;
-    for (int i = 0; i < length; i++) {
-      int index = (crc >> 24) ^ (this[i] & 0xFF);
-      crc = (crc << 8) ^ _crc32Table[index & 0xFF];
-      crc &= 0xFFFFFFFF;
+    for (int byte in this) {
+      int crcIndex = byte ^ (crc >> 24);
+      crc = ((crc << 8) & 0xFFFFFFFF) ^ _crc32Table[crcIndex];
     }
     return crc;
   }
