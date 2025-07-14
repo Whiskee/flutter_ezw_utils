@@ -1,19 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:archive/archive_io.dart';
 import 'package:flutter_ezw_utils/models/uint_type.dart';
 
 extension Uint8listExt on Uint8List {
   /// 转十六进制
   String toHexString() => map((byte) => byte.toRadixString(16)).join(" ");
-
-  /// 获取 CRC32 校验码
-  int toCrc32({int? startIndex, int? endIndex}) {
-    int start = startIndex ?? 0;
-    int end = endIndex ?? length;
-    final newData = sublist(start, end);
-    return getCrc32(newData);
-  }
 
   /// 获取 CRC16 校验码
   int toCrc16({int? initialCrc}) {
@@ -37,6 +28,28 @@ extension Uint8listExt on Uint8List {
       crc ^= temp3;
     }
     return crc & 0xFFFF;
+  }
+
+  /// 获取 CRC32 校验码
+  int toCrc32({int? initialCrc}) {
+    const crcTable = [
+      0x00000000,
+      0x1EDC6F41,
+      0x3DB8DE82,
+      0x2364B1C3,
+      0x7B71BD04,
+      0x65ADD245,
+      0x46C96386,
+      0x58150CC7,
+      0x7B180D73,
+      0x65C46232
+    ];
+    int crc = initialCrc ?? 0xFFFFFFFF;
+    for (final byte in this) {
+      final index = (byte ^ (crc >> 24)) & 0xFF;
+      crc = (crc << 8) ^ crcTable[index];
+    }
+    return crc ^ 0xFFFFFFFF;
   }
 
   /// 获取int值
