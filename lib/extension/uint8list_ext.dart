@@ -296,7 +296,7 @@ extension Uint8listExt on Uint8List {
   /// [initialCrc] - 初始 CRC 值（默认为 0xFFFFFFFF）
   /// 返回计算后的 CRC 值
   int toCrc32({
-    int initialCrc = 0xFFFFFFFF,
+    int initialCrc = 0,
   }) {
     int crc = initialCrc;
     for (int byte in this) {
