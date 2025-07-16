@@ -18,6 +18,7 @@ export 'package:archive/archive.dart';
 export 'package:scrollview_observer/scrollview_observer.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 export 'package:fixnum/fixnum.dart';
+export 'package:charset/charset.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
