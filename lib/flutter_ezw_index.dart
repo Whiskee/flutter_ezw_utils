@@ -33,6 +33,7 @@ export 'extension/state_ext.dart';
 export 'extension/string_ext.dart';
 export 'extension/uint8list_ext.dart';
 export 'extension/widget_ext.dart';
+export 'extension/list_ext.dart';
 
 /// Json
 export 'json/unit8list_converter.dart';
