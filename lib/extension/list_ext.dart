@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 extension ListIntExt on List<int> {
@@ -20,7 +21,7 @@ extension ListIntExt on List<int> {
   Uint8List toUint8List() => Uint8List.fromList(this);
 
   //  解码为字符串
-  String decodeToString() => String.fromCharCodes(this);
+  String decodeToString() => utf8.decode(this);
 
   // 将 4 字节 List<int> 转换为 int
   int fourBytesToInt() =>
