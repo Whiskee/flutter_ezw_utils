@@ -19,8 +19,8 @@ extension ListIntExt on List<int> {
   //  转Uint8List
   Uint8List toUint8List() => Uint8List.fromList(this);
 
-  //  转字符串
-  String encodeString() => String.fromCharCodes(this);
+  //  解码为字符串
+  String decodeToString() => String.fromCharCodes(this);
 
   // 将 4 字节 List<int> 转换为 int
   int fourBytesToInt() =>
