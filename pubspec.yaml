@@ -58,6 +58,8 @@ dependencies:
   # convert gbk to utf-8
   # - https://pub.dev/packages/flutter_gbk2utf8
   flutter_gbk2utf8: ^1.0.1
+  # 节流/防抖 - https://pub.dev/packages/debounce_throttle
+  debounce_throttle: ^2.0.0
 
 dev_dependencies:
   flutter_test:
