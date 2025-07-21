@@ -19,6 +19,7 @@ export 'package:permission_handler/permission_handler.dart';
 export 'package:scrollview_observer/scrollview_observer.dart';
 export 'package:synchronized/synchronized.dart';
 export 'package:uuid/uuid.dart';
+export 'package:debounce_throttle/debounce_throttle.dart';
 
 /// Encrypt
 export 'encrypt/encrypt.dart';
