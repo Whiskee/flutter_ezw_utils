@@ -34,7 +34,7 @@ class Storage {
   /// @param key 要监听的key
   /// @param callback 值变化时的回调函数
   /// @param T 值的类型
-  void addListener<T>(String key, StorageValueChangedCallback<T> callback) {
+  void addListener<T>(String key, StorageValueChangedCallback callback) {
     if (!_changeListeners.containsKey(key)) {
       _changeListeners[key] = [];
     }
@@ -51,7 +51,7 @@ class Storage {
   /// 移除监听器
   /// @param key 要移除监听的key
   /// @param callback 要移除的回调函数，如果为null则移除该key的所有监听器
-  void removeListener<T>(String key, [StorageValueChangedCallback<T>? callback]) {
+  void removeListener<T>(String key, [StorageValueChangedCallback? callback]) {
     if (!_changeListeners.containsKey(key)) {
       return;
     }
@@ -219,9 +219,9 @@ class Storage {
       for (final listener in _changeListeners[key]!) {
         if (listener.valueType == T) {
           try {
-            (listener.callback as StorageValueChangedCallback<T>)(key, oldValue, newValue);
+            listener.callback(key, oldValue, newValue);
           } catch (e) {
-            log.e(_tag, "Error in listener callback for key: $key, error: $e");
+            log.e(_tag, "Error in listener callback4444 for key: $key, error: $e");
           }
         }
       }
@@ -296,7 +296,7 @@ class Storage {
 /// 存储监听器包装类
 class _StorageListener<T> {
   final String key;
-  final StorageValueChangedCallback<T> callback;
+  final StorageValueChangedCallback callback;
   final Type valueType;
 
   _StorageListener({
@@ -308,4 +308,4 @@ class _StorageListener<T> {
 
 
 /// 存储值变化监听器回调类型
-typedef StorageValueChangedCallback<T> = void Function(String key, T? oldValue, T? newValue);
+typedef StorageValueChangedCallback = void Function(String key, dynamic oldValue, dynamic newValue);
