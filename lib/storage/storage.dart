@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_ezw_logger/even_logger.dart';
@@ -8,6 +9,14 @@ class Storage {
   static Storage to = Storage._init();
   MMKV? _mmkvInstance;
   static const _tag = "Storage";
+
+  /// 监听器管理
+  /// key:存储的key ,value:需要监听变化的所有的callback的回调
+  final Map<String, List<_StorageListener>> _changeListeners = {};
+
+  /// 监听的controller map
+  /// key: 存储的key,value: 其对应的StreamController，用于监听对应值的变化回调
+  final Map<String, StreamController> _valueChangeStreamControllers = {};
 
   Storage._init();
 
@@ -21,7 +30,63 @@ class Storage {
     _mmkvInstance = MMKV.defaultMMKV();
   }
 
+  /// 添加监听器
+  /// @param key 要监听的key
+  /// @param callback 值变化时的回调函数
+  /// @param T 值的类型
+  void addListener<T>(String key, StorageValueChangedCallback<T> callback) {
+    if (!_changeListeners.containsKey(key)) {
+      _changeListeners[key] = [];
+    }
+    
+    final listener = _StorageListener<T>(
+      key: key,
+      callback: callback,
+      valueType: T,
+    );
+    
+    _changeListeners[key]!.add(listener);
+  }
+
+  /// 移除监听器
+  /// @param key 要移除监听的key
+  /// @param callback 要移除的回调函数，如果为null则移除该key的所有监听器
+  void removeListener<T>(String key, [StorageValueChangedCallback<T>? callback]) {
+    if (!_changeListeners.containsKey(key)) {
+      return;
+    }
+
+    if (callback == null) {
+      // 移除该key的所有监听器
+      _changeListeners.remove(key);
+      _disposeStreamController(key);
+    } else {
+      // 移除特定的监听器
+      _changeListeners[key]!.removeWhere((listener) =>
+        listener.callback == callback && listener.valueType == T);
+      
+      if (_changeListeners[key]!.isEmpty) {
+        _changeListeners.remove(key);
+        _disposeStreamController(key);
+      }
+    }
+  }
+
+  /// 获取指定key的Stream，用于监听值变化
+  /// @param key 要监听的key
+  /// @param T 值的类型
+  /// @return Stream<T?> 值变化的流
+  Stream<T?> watch<T>(String key) {
+    if (!_valueChangeStreamControllers.containsKey(key)) {
+      _valueChangeStreamControllers[key] = StreamController<T?>.broadcast();
+    }
+    return _valueChangeStreamControllers[key]!.stream.cast<T?>();
+  }
+
   void setData<T>(String key, T value) {
+    // 获取旧值用于通知
+    T? oldValue = getData<T>(key);
+    
     if (value is String) {
       _mmkvInstance?.encodeString(key, value);
     } else if (value is int) {
@@ -38,7 +103,11 @@ class Storage {
       _mmkvInstance?.encodeBytes(key, MMBuffer.fromList(value));
     } else {
       log.e(_tag, "setData with not support type,key=$key,value=$value");
+      return;
     }
+
+    // 通知监听器值已变化
+    _notifyListeners<T>(key, oldValue, value);
   }
 
   /// 获取存储数据
@@ -70,6 +139,9 @@ class Storage {
   void saveListData<T>(String key, List<T> list,
       [dynamic Function(T item)? toJson]) {
     try {
+      // 获取旧值用于通知
+      List<T>? oldValue = getListData<T>(key);
+      
       final jsonList = list.map((item) {
         if (item is String || item is num || item is bool) {
           return item; // 基础类型直接存储
@@ -87,6 +159,9 @@ class Storage {
       final jsonString = jsonEncode(jsonList);
       _mmkvInstance?.encodeString(key, jsonString);
       log.d(_tag, "saveListData success: key=$key, count=${list.length}");
+      
+      // 通知监听器值已变化
+      _notifyListeners<List<T>>(key, oldValue, list);
     } catch (e) {
       log.e(_tag, "saveListData error: key=$key, error=$e");
     }
@@ -123,7 +198,12 @@ class Storage {
 
   /// 移除缓存信息
   void removeData(String key) {
+    // 获取旧值用于通知
+    final oldValue = _mmkvInstance?.decodeString(key);
     _mmkvInstance?.removeValue(key);
+    
+    // 通知监听器值已被移除
+    _notifyListeners(key, oldValue, null);
   }
 
   /// 是否有某个key的缓存
@@ -131,6 +211,40 @@ class Storage {
   bool isContainerKey(String key) {
     return _mmkvInstance?.containsKey(key) ?? false;
   }
+
+  /// 通知监听器值已变化
+  void _notifyListeners<T>(String key, T? oldValue, T? newValue) async {
+    // 通知回调监听器
+    if (_changeListeners.containsKey(key)) {
+      for (final listener in _changeListeners[key]!) {
+        if (listener.valueType == T) {
+          try {
+            (listener.callback as StorageValueChangedCallback<T>)(key, oldValue, newValue);
+          } catch (e) {
+            log.e(_tag, "Error in listener callback for key: $key, error: $e");
+          }
+        }
+      }
+    }
+
+    // 通知Stream监听器
+    if (_valueChangeStreamControllers.containsKey(key)) {
+      try {
+        _valueChangeStreamControllers[key]!.add(newValue);
+      } catch (e) {
+        log.e(_tag, "Error in stream controller for key: $key, error: $e");
+      }
+    }
+  }
+
+  /// 释放Stream控制器
+  void _disposeStreamController(String key) {
+    if (_valueChangeStreamControllers.containsKey(key)) {
+      _valueChangeStreamControllers[key]!.close();
+      _valueChangeStreamControllers.remove(key);
+    }
+  }
+
 
   void _setListString(String key, List<String> data) {
     _mmkvInstance?.encodeString(key, jsonEncode(data));
@@ -162,4 +276,36 @@ class Storage {
     final jsonString = _mmkvInstance?.decodeString(key) ?? "";
     return jsonString.isEmpty ? null : jsonDecode(jsonString) as Map?;
   }
+
+  /// 清理所有监听器和Stream控制器
+  /// 在应用退出时调用，避免内存泄漏
+  void dispose() {
+    // 清理所有监听器
+    _changeListeners.clear();
+    
+    // 关闭所有Stream控制器
+    for (final controller in _valueChangeStreamControllers.values) {
+      controller.close();
+    }
+    _valueChangeStreamControllers.clear();
+    
+    log.d(_tag, "Storage disposed all listeners and stream controllers");
+  }
 }
+
+/// 存储监听器包装类
+class _StorageListener<T> {
+  final String key;
+  final StorageValueChangedCallback<T> callback;
+  final Type valueType;
+
+  _StorageListener({
+    required this.key,
+    required this.callback,
+    required this.valueType,
+  });
+}
+
+
+/// 存储值变化监听器回调类型
+typedef StorageValueChangedCallback<T> = void Function(String key, T? oldValue, T? newValue);
