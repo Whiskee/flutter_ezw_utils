@@ -1,7 +1,6 @@
 name: flutter_ezw_utils
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage:
 
 environment:
   sdk: ^3.5.3
