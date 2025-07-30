@@ -122,7 +122,7 @@ class Storage {
       return _mmkvInstance?.decodeBool(key) as T?;
     } else if (T == List<String>) {
       return _getStringList(key) as T;
-    } else if (T == Map) {
+    } else if (T == Map<String, dynamic>) {
       return _getMap(key) as T?;
     } else if (T == Uint8List) {
       return _getUint8List(key) as T?;
