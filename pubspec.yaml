@@ -59,6 +59,8 @@ dependencies:
   flutter_gbk2utf8: ^1.0.1
   # 节流/防抖 - https://pub.dev/packages/debounce_throttle
   debounce_throttle: ^2.0.0
+  # 路径处理 -  https://pub.dev/packages/path_provider
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
