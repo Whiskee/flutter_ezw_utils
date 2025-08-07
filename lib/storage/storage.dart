@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_ezw_logger/even_logger.dart';
@@ -38,13 +38,13 @@ class Storage {
     if (!_changeListeners.containsKey(key)) {
       _changeListeners[key] = [];
     }
-    
+
     final listener = _StorageListener<T>(
       key: key,
       callback: callback,
       valueType: T,
     );
-    
+
     _changeListeners[key]!.add(listener);
   }
 
@@ -63,8 +63,8 @@ class Storage {
     } else {
       // 移除特定的监听器
       _changeListeners[key]!.removeWhere((listener) =>
-        listener.callback == callback && listener.valueType == T);
-      
+          listener.callback == callback && listener.valueType == T);
+
       if (_changeListeners[key]!.isEmpty) {
         _changeListeners.remove(key);
         _disposeStreamController(key);
@@ -86,7 +86,7 @@ class Storage {
   void setData<T>(String key, T value) {
     // 获取旧值用于通知
     T? oldValue = getData<T>(key);
-    
+
     if (value is String) {
       _mmkvInstance?.encodeString(key, value);
     } else if (value is int) {
@@ -97,7 +97,7 @@ class Storage {
       _mmkvInstance?.encodeDouble(key, value);
     } else if (value is List<String>) {
       _setListString(key, value);
-    } else if (value is Map) {
+    } else if (value is Map<dynamic, dynamic>) {
       _setMap(key, value);
     } else if (value is Uint8List) {
       _mmkvInstance?.encodeBytes(key, MMBuffer.fromList(value));
@@ -141,7 +141,7 @@ class Storage {
     try {
       // 获取旧值用于通知
       List<T>? oldValue = getListData<T>(key);
-      
+
       final jsonList = list.map((item) {
         if (item is String || item is num || item is bool) {
           return item; // 基础类型直接存储
@@ -159,7 +159,7 @@ class Storage {
       final jsonString = jsonEncode(jsonList);
       _mmkvInstance?.encodeString(key, jsonString);
       log.d(_tag, "saveListData success: key=$key, count=${list.length}");
-      
+
       // 通知监听器值已变化
       _notifyListeners<List<T>>(key, oldValue, list);
     } catch (e) {
@@ -201,7 +201,7 @@ class Storage {
     // 获取旧值用于通知
     final oldValue = _mmkvInstance?.decodeString(key);
     _mmkvInstance?.removeValue(key);
-    
+
     // 通知监听器值已被移除
     _notifyListeners(key, oldValue, null);
   }
@@ -221,7 +221,8 @@ class Storage {
           try {
             listener.callback(key, oldValue, newValue);
           } catch (e) {
-            log.e(_tag, "Error in listener callback4444 for key: $key, error: $e");
+            log.e(_tag,
+                "Error in listener callback4444 for key: $key, error: $e");
           }
         }
       }
@@ -244,7 +245,6 @@ class Storage {
       _valueChangeStreamControllers.remove(key);
     }
   }
-
 
   void _setListString(String key, List<String> data) {
     _mmkvInstance?.encodeString(key, jsonEncode(data));
@@ -282,13 +282,13 @@ class Storage {
   void dispose() {
     // 清理所有监听器
     _changeListeners.clear();
-    
+
     // 关闭所有Stream控制器
     for (final controller in _valueChangeStreamControllers.values) {
       controller.close();
     }
     _valueChangeStreamControllers.clear();
-    
+
     log.d(_tag, "Storage disposed all listeners and stream controllers");
   }
 }
@@ -306,6 +306,6 @@ class _StorageListener<T> {
   });
 }
 
-
 /// 存储值变化监听器回调类型
-typedef StorageValueChangedCallback = void Function(String key, dynamic oldValue, dynamic newValue);
+typedef StorageValueChangedCallback = void Function(
+    String key, dynamic oldValue, dynamic newValue);
