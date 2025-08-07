@@ -97,6 +97,10 @@ class Storage {
       _mmkvInstance?.encodeDouble(key, value);
     } else if (value is List<String>) {
       _setListString(key, value);
+    } else if (value is Map) {
+      _setMap(key, value);
+    } else if (value is Map<String, dynamic>) {
+      _setMap(key, value);
     } else if (value is Map<dynamic, dynamic>) {
       _setMap(key, value);
     } else if (value is Uint8List) {
