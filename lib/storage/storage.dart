@@ -193,17 +193,24 @@ class Storage {
       if (jsonString == null || jsonString.isEmpty) {
         return [];
       }
-      final jsonList = jsonDecode(jsonString) as List<dynamic>;
+      List<Object?>? jsonList;
+      if (T == List<T>) {
+        jsonList = jsonDecode(jsonString) as List<T>;
+      } else if (T == List<Map<String, dynamic>>) {
+        jsonList = jsonDecode(jsonString) as List<Map<String, dynamic>>;
+      } else if (T == List<Map<dynamic, dynamic>>) {
+        jsonList = jsonDecode(jsonString) as List<Map<dynamic, dynamic>>;
+      }
 
       if (fromJson != null) {
         // 使用传入的 fromJson 方法
-        final result = jsonList.map((json) => fromJson(json)).toList();
-        return result;
+        final result = jsonList?.map((json) => fromJson(json)).toList();
+        return result ?? [];
       } else {
         // 如果没有提供 fromJson 方法，尝试直接转换
-        final result = jsonList.cast<T>();
+        final result = jsonList?.cast<T>();
         log.d(_tag, "getListData try cast direct: key=$key ");
-        return result;
+        return result ?? [];
       }
     } catch (e) {
       log.e(_tag, "getListData error: key=$key, error=$e");
