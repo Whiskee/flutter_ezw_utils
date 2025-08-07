@@ -86,7 +86,6 @@ class Storage {
   void setData<T>(String key, T value) {
     // 获取旧值用于通知
     T? oldValue = getData<T>(key);
-
     if (value is String) {
       _mmkvInstance?.encodeString(key, value);
     } else if (value is int) {
@@ -95,8 +94,6 @@ class Storage {
       _mmkvInstance?.encodeBool(key, value);
     } else if (value is double) {
       _mmkvInstance?.encodeDouble(key, value);
-    } else if (value is List<String>) {
-      _setListString(key, value);
     } else if (value is Map) {
       _setMap(key, value);
     } else if (value is Map<String, dynamic>) {
@@ -105,11 +102,18 @@ class Storage {
       _setMap(key, value);
     } else if (value is Uint8List) {
       _mmkvInstance?.encodeBytes(key, MMBuffer.fromList(value));
+    } else if (value is List<String>) {
+      _setListString(key, value);
+    } else if (value is List<Map>) {
+      saveListData(key, value);
+    } else if (value is List<Map<String, dynamic>>) {
+      saveListData(key, value);
+    } else if (value is List<Map<dynamic, dynamic>>) {
+      saveListData(key, value);
     } else {
       log.e(_tag, "setData with not support type,key=$key,value=$value");
       return;
     }
-
     // 通知监听器值已变化
     _notifyListeners<T>(key, oldValue, value);
   }
@@ -124,12 +128,18 @@ class Storage {
       return _mmkvInstance?.decodeDouble(key) as T?;
     } else if (T == bool) {
       return _mmkvInstance?.decodeBool(key) as T?;
-    } else if (T == List<String>) {
-      return _getStringList(key) as T;
-    } else if (T == Map<String, dynamic>) {
-      return _getMap(key) as T?;
     } else if (T == Uint8List) {
       return _getUint8List(key) as T?;
+    } else if (T == List<T>) {
+      return getListData<T>(key) as T?;
+    } else if (T == List<Map<String, dynamic>>) {
+      return getListData<T>(key) as T?;
+    } else if (T == List<Map<dynamic, dynamic>>) {
+      return getListData<T>(key) as T?;
+    } else if (T == Map<String, dynamic>) {
+      return _getMap(key) as T?;
+    } else if (T == Map<dynamic, dynamic>) {
+      return _getMap(key) as T?;
     }
     log.e(_tag, "getData with not support type,key=$key");
     return null;
@@ -149,7 +159,10 @@ class Storage {
       final jsonList = list.map((item) {
         if (item is String || item is num || item is bool) {
           return item; // 基础类型直接存储
-        } else if (item is Map || item is List) {
+        } else if (item is Map ||
+            item is Map<String, dynamic> ||
+            item is Map<dynamic, dynamic> ||
+            item is List) {
           return item; // Map和List默认支持JSON
         } else if (toJson != null) {
           // 对于自定义对象，使用传入的 toJson 方法
@@ -159,11 +172,9 @@ class Storage {
           return item.toString();
         }
       }).toList();
-
       final jsonString = jsonEncode(jsonList);
       _mmkvInstance?.encodeString(key, jsonString);
       log.d(_tag, "saveListData success: key=$key, count=${list.length}");
-
       // 通知监听器值已变化
       _notifyListeners<List<T>>(key, oldValue, list);
     } catch (e) {
