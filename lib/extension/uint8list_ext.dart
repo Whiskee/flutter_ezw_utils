@@ -358,11 +358,17 @@ extension Uint8listExt on Uint8List {
   /// 将 Uint8List 解码为 UTF-8 字符串
   ///
   /// 如果解码失败，返回空字符串
+  //  字节转字符
   String decodeToString() {
     try {
-      return utf8.decode(this);
+      // 首先使用标准方法解码
+      String result = utf8.decode(this);
+      // 移除所有 null 字符和其他控制字符
+      return result.replaceAll(RegExp(r'[\x00-\x1F\x7F]'), '').trim();
     } catch (e) {
-      return "";
+      // 如果解码失败，尝试直接从字节构建字符串
+      List<int> validBytes = where((byte) => byte > 0 && byte < 127).toList();
+      return String.fromCharCodes(validBytes);
     }
   }
 }
