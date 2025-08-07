@@ -20,8 +20,19 @@ extension ListIntExt on List<int> {
   //  转Uint8List
   Uint8List toUint8List() => Uint8List.fromList(this);
 
-  //  解码为字符串
-  String decodeToString() => utf8.decode(this);
+  //  字节转字符
+  String decodeToString() {
+    try {
+      // 首先使用标准方法解码
+      String result = utf8.decode(this);
+      // 移除所有 null 字符和其他控制字符
+      return result.replaceAll(RegExp(r'[\x00-\x1F\x7F]'), '').trim();
+    } catch (e) {
+      // 如果解码失败，尝试直接从字节构建字符串
+      List<int> validBytes = this.where((byte) => byte > 0 && byte < 127).toList();
+      return String.fromCharCodes(validBytes);
+    }
+  }
 
   // 将 4 字节 List<int> 转换为 int
   int fourBytesToInt() =>
