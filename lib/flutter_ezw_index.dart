@@ -47,3 +47,4 @@ export 'storage/storage.dart';
 export 'utils/bit_util.dart';
 export 'utils/date_util.dart';
 export 'utils/file_util.dart';
+export 'utils/version_util.dart';
