@@ -36,7 +36,7 @@ extension StringExt on String {
   Uint8List encodeBase64() => base64Decode(this);
 
   /// 将MAC地址转换为Uint8List
-  Uint8List macToBytes({bool isLittleEndian = false}) {
+  Uint8List macToBytes({bool? isLittleEndian}) {
     // 移除所有可能的分隔符（冒号、连字符、空格等）
     String cleanMac = replaceAll(RegExp(r'[:\- ]'), '').toUpperCase();
     // 验证MAC地址格式
@@ -53,7 +53,7 @@ extension StringExt on String {
     // 如果第一个字节大于最后一个字节，说明是大端序
     bool isCurrentBigEndian = bytes.first > bytes.last;
     // 根据isLittleEndian参数和当前字节序决定是否需要转换
-    if (isLittleEndian != !isCurrentBigEndian) {
+    if (isLittleEndian != null && isLittleEndian != !isCurrentBigEndian) {
       bytes = bytes.reversed.toList();
     }
     return Uint8List.fromList(bytes);
