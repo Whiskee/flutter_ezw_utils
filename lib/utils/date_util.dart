@@ -328,4 +328,32 @@ class DateUtil {
     int weekNumber = ((dayOfYear - weekday + 10) / 7).floor();
     return weekNumber;
   }
+
+  /// 获取某个周数坐在年份的其实日期和结束日期
+  IsoWeekRange? isoWeekRange(int year, int weekNumber) {
+    //  1、获取当年最大周数
+    final maxWeeks = isoWeeksInYear(year);
+    //  2、
+    if (weekNumber < 1 || weekNumber > maxWeeks) {
+        return null;
+    } 
+    //  3、计算：
+    //  - 第 1 周：包含 1 月 4 日的那一周
+    final jan4 = DateTime(year, 1, 4);
+    //  - 获取该周的周一（weekday: Mon=1..Sun=7）
+    final mondayOfWeek1 = jan4.subtract(
+      Duration(days: jan4.weekday - DateTime.monday),
+    );
+    // 目标周的起止
+    final start = mondayOfWeek1.add(Duration(days: (weekNumber - 1) * 7));
+    final end = start.add(const Duration(days: 6));
+    return IsoWeekRange(start, end);
+  }
+}
+
+/// ISO规则下，某个周数的范围
+class IsoWeekRange {
+  final DateTime start; // 周一（含）
+  final DateTime end; // 周日（含）
+  IsoWeekRange(this.start, this.end);
 }
