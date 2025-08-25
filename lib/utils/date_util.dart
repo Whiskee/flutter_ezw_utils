@@ -305,6 +305,17 @@ class DateUtil {
     return age;
   }
 
+  /// 根据ISO获取一年总周数
+  static int isoWeeksInYear(int year) {
+    final jan1 = DateTime(year, 1, 1);
+    final dec31 = DateTime(year, 12, 31);
+    // 如果 1 月 1 日是星期四，或者 12 月 31 日是星期四 => 53 周
+    return jan1.weekday == DateTime.thursday ||
+            dec31.weekday == DateTime.thursday
+        ? 53
+        : 52;
+  }
+
   /// 结合 ISO 周数规则来计算某个时间戳是该年的第几周
   static int getWeekNumber(int timestamp) {
     //  1、时间戳转时间格式
