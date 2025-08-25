@@ -306,7 +306,7 @@ class DateUtil {
   }
 
   /// 结合 ISO 周数规则来计算某个时间戳是该年的第几周
-  int getWeekNumber(int timestamp) {
+  static int getWeekNumber(int timestamp) {
     //  1、时间戳转时间格式
     final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
     //  2、获取当前时间是一年的第几天
