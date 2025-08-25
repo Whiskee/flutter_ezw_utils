@@ -304,4 +304,17 @@ class DateUtil {
     }
     return age;
   }
+
+  /// 结合 ISO 周数规则来计算某个时间戳是该年的第几周
+  int getWeekNumber(int timestamp) {
+    //  1、时间戳转时间格式
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    //  2、获取当前时间是一年的第几天
+    final dayOfYear = int.parse(DateFormat("D").format(date));
+    //  3、当前日期是星期几（星期一=1, 星期日=7）
+    int weekday = date.weekday;
+    //  4、ISO 8601 规定的周数计算公式：week = (dayOfYear - weekday + 10) ~/ 7
+    int weekNumber = ((dayOfYear - weekday + 10) / 7).floor();
+    return weekNumber;
+  }
 }
