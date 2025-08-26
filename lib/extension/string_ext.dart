@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:flutter_ezw_utils/utils/date_util.dart';
+
 extension StringExt on String {
   /// 字符串转Uint8List
   Uint8List toUint8List() => utf8.encode(this);
@@ -55,6 +57,10 @@ extension StringExt on String {
     }
     return Uint8List.fromList(bytes);
   }
+
+  /// 将日期转时间
+  DateTime? toDateTime({String format = DateUtil.formatYYYY_MM_DD}) =>
+      DateUtil.parseDateString(this, format);
 }
 
 extension StringNullExt on String? {
