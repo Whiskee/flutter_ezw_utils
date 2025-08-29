@@ -17,6 +17,14 @@ class DateUtil {
   static const String formatHH_MM_SS = 'HH:mm:ss';
   static const String formatYYYY_MM_DD_CN = 'yyyy年MM月dd日';
   static const String formatMM_DD_CN = 'MM月dd日';
+  static const String formatMMM_D = 'MMM d';      // Jul 17
+  static const String formatMMMM_D = 'MMMM d';    // July 17
+  static const String formatMMM_D_YYYY = 'MMM d, yyyy';    // Jul 17, 2023
+  static const String formatMMMM_D_YYYY = 'MMMM d, yyyy';  // July 17, 2023
+  static const String formatD_MMM_YYYY = 'd MMM yyyy';     // 17 Jul 2023
+  static const String formatD_MMMM_YYYY = 'd MMMM yyyy';   // 17 July 2023
+  static const String formatYYYY_MMM_D = 'yyyy MMM d';     // 2023 Jul 17
+  static const String formatYYYY_MMMM_D = 'yyyy MMMM d';   // 2023 July 17
 
   /// 根据格式字符串获取当前日期的字符串表示
   ///
@@ -62,6 +70,14 @@ class DateUtil {
       formatYYYY_MM_DD_HH_MM,
       formatYYYY_MM_DD_HH_MM_SS,
       formatYYYY_MM_DD_CN,
+      formatMMM_D,
+      formatMMMM_D,
+      formatMMM_D_YYYY,
+      formatMMMM_D_YYYY,
+      formatD_MMM_YYYY,
+      formatD_MMMM_YYYY,
+      formatYYYY_MMM_D,
+      formatYYYY_MMMM_D,
     ];
 
     for (final format in formats) {
