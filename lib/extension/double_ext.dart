@@ -9,11 +9,7 @@ extension WidgetDoubleExt on double {
   //  高度
   Widget get heightBox => SizedBox(height: this);
 
-  /// 保留小数：方案1
-  String formatDouble({int precision = 1}) =>
-      this % 1 == 0 ? toInt().toString() : toStringAsFixed(precision); // 保留一位小数
-
-  /// 保留小数：方案2
-  String formatDouble2({String format = "#.#"}) =>
+  /// 保留小数
+  String formatDouble({String format = "#.#"}) =>
       NumberFormat(format).format(this);
 }
