@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter_ezw_utils/flutter_ezw_index.dart';
+
 extension ListIntExt on List<int> {
   // 将 List<int> 转换为十六进制字符串
   String toHexString() {
@@ -29,7 +31,8 @@ extension ListIntExt on List<int> {
       return result.replaceAll(RegExp(r'[\x00-\x1F\x7F]'), '').trim();
     } catch (e) {
       // 如果解码失败，尝试直接从字节构建字符串
-      List<int> validBytes = this.where((byte) => byte > 0 && byte < 127).toList();
+      List<int> validBytes =
+          this.where((byte) => byte > 0 && byte < 127).toList();
       return String.fromCharCodes(validBytes);
     }
   }
@@ -37,4 +40,12 @@ extension ListIntExt on List<int> {
   // 将 4 字节 List<int> 转换为 int
   int fourBytesToInt() =>
       (this[0] << 24) | (this[1] << 16) | (this[2] << 8) | this[3];
+}
+
+extension ListStringExt<T> on List<T> {
+  // 查询最后一个元素
+  T? lastWhereOrNull(bool Function(T) test) {
+    final newList = reversed.toList();
+    return newList.firstWhereOrNull(test);
+  }
 }
