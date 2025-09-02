@@ -12,6 +12,7 @@ export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 /// ThirdPart
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_svg/flutter_svg.dart';
+export 'package:flutter_timezone/flutter_timezone.dart';
 export 'package:get/get.dart';
 export 'package:get/get_connect/http/src/request/request.dart';
 export 'package:json_annotation/json_annotation.dart';
@@ -19,6 +20,7 @@ export 'package:lottie/lottie.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:scrollview_observer/scrollview_observer.dart';
+export 'package:share_plus/share_plus.dart';
 export 'package:synchronized/synchronized.dart';
 export 'package:uuid/uuid.dart';
 

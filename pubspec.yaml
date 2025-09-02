@@ -61,6 +61,12 @@ dependencies:
   debounce_throttle: ^2.0.0
   # 路径处理 -  https://pub.dev/packages/path_provider
   path_provider: ^2.1.5
+  # 处理时区
+  # - https://pub.dev/packages/flutter_timezone
+  flutter_timezone: ^4.1.1
+  # 分享插件
+  # - https://pub.dev/packages/share_plus
+  share_plus: ^11.1.0
 
 dev_dependencies:
   flutter_test:
