@@ -11,20 +11,24 @@ class DateUtil {
   static const String formatYYYYMMDD = 'yyyyMMdd';
   static const String formatYYYY_MM_DD = 'yyyy-MM-dd';
   static const String formatYYYY_MM_DD_HH_MM = 'yyyy-MM-dd HH:mm';
+  static const String formatMM_DD_HH_MM = 'MM-dd HH:mm';
+  static const String formatMMDD_HH_MM = 'MMdd HH:mm';
   static const String formatYYYY_MM_DD_HH_MM_SS = 'yyyy-MM-dd HH:mm:ss';
   static const String formatMM_DD = 'MM-dd';
   static const String formatHH_MM = 'HH:mm';
   static const String formatHH_MM_SS = 'HH:mm:ss';
   static const String formatYYYY_MM_DD_CN = 'yyyy年MM月dd日';
   static const String formatMM_DD_CN = 'MM月dd日';
-  static const String formatMMM_D = 'MMM d';      // Jul 17
-  static const String formatMMMM_D = 'MMMM d';    // July 17
-  static const String formatMMM_D_YYYY = 'MMM d, yyyy';    // Jul 17, 2023
-  static const String formatMMMM_D_YYYY = 'MMMM d, yyyy';  // July 17, 2023
-  static const String formatD_MMM_YYYY = 'd MMM yyyy';     // 17 Jul 2023
-  static const String formatD_MMMM_YYYY = 'd MMMM yyyy';   // 17 July 2023
-  static const String formatYYYY_MMM_D = 'yyyy MMM d';     // 2023 Jul 17
-  static const String formatYYYY_MMMM_D = 'yyyy MMMM d';   // 2023 July 17
+  static const String formatMMM_D = 'MMM d';                // Jul 17
+  static const String formatMMM_D_HH_mm = 'MMM d HH:mm';    // Jul 17 10:24
+  static const String formatMMMM_D = 'MMMM d';              // July 17
+  static const String formatMMMM_D_HH_mm = 'MMMM d HH:mm';  // July 17 10:24
+  static const String formatMMM_D_YYYY = 'MMM d, yyyy';     // Jul 17, 2023
+  static const String formatMMMM_D_YYYY = 'MMMM d, yyyy';   // July 17, 2023
+  static const String formatD_MMM_YYYY = 'd MMM yyyy';      // 17 Jul 2023
+  static const String formatD_MMMM_YYYY = 'd MMMM yyyy';    // 17 July 2023
+  static const String formatYYYY_MMM_D = 'yyyy MMM d';      // 2023 Jul 17
+  static const String formatYYYY_MMMM_D = 'yyyy MMMM d';    // 2023 July 17
 
   /// 根据格式字符串获取当前日期的字符串表示
   ///
