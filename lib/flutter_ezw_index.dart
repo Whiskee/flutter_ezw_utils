@@ -1,5 +1,6 @@
 library flutter_ezw;
 
+/// ThirdPart
 export 'package:app_settings/app_settings.dart';
 export 'package:archive/archive.dart';
 export 'package:charset/charset.dart';
@@ -8,8 +9,6 @@ export 'package:file_picker/file_picker.dart';
 export 'package:fixnum/fixnum.dart';
 export 'package:flutter_ezw_utils/flutter_ezw_utils.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-
-/// ThirdPart
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_timezone/flutter_timezone.dart';

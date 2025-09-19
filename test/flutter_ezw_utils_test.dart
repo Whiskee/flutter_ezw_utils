@@ -19,7 +19,7 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    EzwUtils flutterEzwUtilsPlugin = EzwUtils();
+    EzwUtils flutterEzwUtilsPlugin = EzwUtils.to;
     MockFlutterEzwUtilsPlatform fakePlatform = MockFlutterEzwUtilsPlatform();
     EzwUtilsPlatform.instance = fakePlatform;
     expect(await flutterEzwUtilsPlugin.getPlatformVersion(), '42');

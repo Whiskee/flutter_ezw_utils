@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  final _flutterEzwUtilsPlugin = EzwUtils();
+  final _flutterEzwUtilsPlugin = EzwUtils.to;
 
   @override
   void initState() {
