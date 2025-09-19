@@ -19,6 +19,8 @@ class DateUtil {
   static const String formatHH_MM_SS = 'HH:mm:ss';
   static const String formatYYYY_MM_DD_CN = 'yyyy年MM月dd日';
   static const String formatMM_DD_CN = 'MM月dd日';
+  static const String formatMMM= 'MMM';                     // Jul
+  static const String formatMMMM= 'MMMM';                   // July
   static const String formatMMM_D = 'MMM d';                // Jul 17
   static const String formatMMM_D_HH_mm = 'MMM d HH:mm';    // Jul 17 10:24
   static const String formatMMMM_D = 'MMMM d';              // July 17
