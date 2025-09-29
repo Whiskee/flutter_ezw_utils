@@ -49,7 +49,7 @@ extension ListIntExt on List<int> {
     //  2、确保数据长度足够
     int bytesNeeded = (bitWidth / 8).ceil();
     if (length < bytesNeeded) {
-      return -1;
+      return 0;
     }
     //  3、创建 Uint8List 和 ByteData
     final uint8List = Uint8List.fromList(this.take(bytesNeeded).toList());
