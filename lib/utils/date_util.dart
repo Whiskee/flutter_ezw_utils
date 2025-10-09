@@ -327,6 +327,20 @@ class DateUtil {
     return age;
   }
 
+  /// 根据日期字符串获取年龄
+  ///
+  /// [dateString] 生日字符串，如 '1990-05-20'
+  /// [format] 字符串格式，默认 'yyyy-MM-dd'
+  /// 解析失败返回 null
+  static int? getAgeFromDateString(
+    String dateString, [
+    String format = formatYYYY_MM_DD,
+  ]) {
+    final DateTime? birthDate = parseDateString(dateString, format);
+    if (birthDate == null) return null;
+    return getAge(birthDate);
+  }
+
   /// 根据ISO获取一年总周数
   static int isoWeeksInYear(int year) {
     final jan1 = DateTime(year, 1, 1);
