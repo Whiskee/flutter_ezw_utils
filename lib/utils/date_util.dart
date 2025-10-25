@@ -9,6 +9,7 @@ class DateUtil {
 
   /// Common date formats
   static const String formatYYYYMMDD = 'yyyyMMdd';
+  static const String formatYYYYlMMlDD = 'yyyy/MM/dd';
   static const String formatYYYY_MM_DD = 'yyyy-MM-dd';
   static const String formatYYYY_MM_DD_HH_MM = 'yyyy-MM-dd HH:mm';
   static const String formatMM_DD_HH_MM = 'MM-dd HH:mm';
