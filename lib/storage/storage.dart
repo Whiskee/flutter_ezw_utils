@@ -121,10 +121,17 @@ class Storage {
   /// 获取存储数据
   T? getData<T>(String key) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (_mmkvInstance?.containsKey(key) != true) {
 =======
     if (!isContainerKey(key)) {
 >>>>>>> 5605fab (fix:storage 增加Map<String,String>类型的存储)
+=======
+    if (!isContainerKey(key)) {
+=======
+    if (_mmkvInstance?.containsKey(key) != true) {
+>>>>>>> 1f34ab8 (fix(storage): return null for non-existent keys in getData method)
+>>>>>>> 8040c0a (fix(storage): return null for non-existent keys in getData method)
       return null;
     }
     if (T == String) {
