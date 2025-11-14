@@ -118,6 +118,9 @@ class Storage {
 
   /// 获取存储数据
   T? getData<T>(String key) {
+    if (_mmkvInstance?.containsKey(key) != true) {
+      return null;
+    }
     if (T == String) {
       return _mmkvInstance?.decodeString(key) as T?;
     } else if (T == int) {
