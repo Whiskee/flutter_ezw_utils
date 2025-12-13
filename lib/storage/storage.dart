@@ -99,11 +99,13 @@ class Storage {
       _setListString(key, value);
     } else if (value is List<Map<String, dynamic>>) {
       _setListMap(key, value);
-    } else if (value is Map) {
-      _setMap(key, value);
-    } else if (value is Map<String, dynamic>) {
+    }  else if (value is Map<String, dynamic>) {
       _setMap(key, value);
     } else if (value is Map<dynamic, dynamic>) {
+      _setMap(key, value);
+    } else if (value is Map<String, String>) {
+      _setMap(key, value);
+    } else if (value is Map) {
       _setMap(key, value);
     } else if (value is Uint8List) {
       _mmkvInstance?.encodeBytes(key, MMBuffer.fromList(value));
@@ -118,7 +120,11 @@ class Storage {
 
   /// 获取存储数据
   T? getData<T>(String key) {
+<<<<<<< HEAD
     if (_mmkvInstance?.containsKey(key) != true) {
+=======
+    if (!isContainerKey(key)) {
+>>>>>>> 5605fab (fix:storage 增加Map<String,String>类型的存储)
       return null;
     }
     if (T == String) {
@@ -134,6 +140,10 @@ class Storage {
     } else if (T == List<Map<String, dynamic>>) {
       return _getMapList(key) as T;
     } else if (T == Map<String, dynamic>) {
+      return _getMap(key) as T?;
+    } else if (T == Map<String, String>) {
+      return _getMap(key) as T?;
+    } else if (T == Map) {
       return _getMap(key) as T?;
     } else if (T == Uint8List) {
       return _getUint8List(key) as T?;
