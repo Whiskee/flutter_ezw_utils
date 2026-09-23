@@ -20,6 +20,9 @@ class Storage {
 
   Storage._init();
 
+  @visibleForTesting
+  Storage.forTesting(MMKV? instance) : _mmkvInstance = instance;
+
   /// TODO:名字先不改了
   /// (使用前必须执行)初始化SharpPreferences
   Future<void> initPrefs() async {
@@ -81,6 +84,26 @@ class Storage {
       _valueChangeStreamControllers[key] = StreamController<T?>.broadcast();
     }
     return _valueChangeStreamControllers[key]!.stream.cast<T?>();
+  }
+
+  /// Returns the MMKV write result; does not promise an explicit disk sync.
+  /// Failed writes (including an uninitialized store) do not notify listeners.
+  /// Existing callers of [setData] retain their original behavior.
+  bool setStringWithResult(String key, String value) {
+    final instance = _mmkvInstance;
+    if (instance == null) return false;
+
+    String? oldValue;
+    try {
+      oldValue = getData<String>(key);
+      if (!instance.encodeString(key, value)) return false;
+    } catch (_) {
+      // Keys, values and native exception details may contain private data.
+      log.e(_tag, 'String storage write failed');
+      return false;
+    }
+    _notifyListeners<String>(key, oldValue, value);
+    return true;
   }
 
   void setData<T>(String key, T value) {
